@@ -211,3 +211,20 @@ sudo apt update -y && sudo apt install bash-completion -y
 echo 'source <(kubectl completion bash)' >>~/.bashrc
 source ~/.bashrc
 ```
+
+>[!TIP]
+> اضافه کردن crictl و دیدن ایمیج‌ها
+
+```bash
+sudo rm /usr/local/bin/crictl
+sudo ln -s /var/lib/rancher/rke2/bin/crictl /usr/local/bin/crictl
+
+sudo tee /etc/crictl.yaml > /dev/null <<EOF
+runtime-endpoint: unix:///run/k3s/containerd/containerd.sock
+image-endpoint: unix:///run/k3s/containerd/containerd.sock
+EOF
+```
+سپس:
+```bash
+sudo crictl images
+```
